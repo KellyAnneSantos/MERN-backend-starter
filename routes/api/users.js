@@ -4,6 +4,7 @@ const User = require("../../models/User");
 const shortId = require("shortid");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
+const secret = require("../../config/keys").secretOrKey;
 
 const { runValidation } = require("../../validation");
 const { validateRegisterInput } = require("../../validation/register");
@@ -47,7 +48,7 @@ router.post("/login", userLoginValidator, runValidation, (req, res) => {
         });
       }
 
-      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      const token = jwt.sign({ _id: user._id }, secret, {
         expiresIn: 604800,
       });
 
